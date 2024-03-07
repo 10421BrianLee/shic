@@ -1,0 +1,215 @@
+int linearGraph(float linearA, int targetX) {
+	//pos1 = player, pos2 = obj
+	int outputY = 0;
+	outputY = linearA * targetX;
+	outputY = (int)outputY;
+	return outputY;
+}
+
+float LinearGraphGen(int pos1x, int pos1y, int pos2x, int pos2y) {
+	int xDiff, yDiff;
+	float a;
+	xDiff = pos2x - pos1x;
+	yDiff = pos2y - pos1y;
+	a = xDiff / yDiff;
+	return a;
+}
+
+int checkFor(int pos1x, int pos1y, int pos2x, int pos2y, int *map) {
+	float linearA = 0;
+	bool detected = 0;
+	linearA = LinearGraphGen(pos1x, pos1y, pos2x, pos2y);
+	if (pos1x < pos2x) {
+		for (int i = pos1x; i <= pos2x; i++) {
+
+		}
+	}
+	else if (pos1x > pos2x) {
+		for (int i = pos1x; i >= pos2x; i--) {
+
+		}
+	}
+	else {
+		for (int i = 0; i < 10; i++) {
+
+		}
+	}
+	return 0;
+}
+
+void cursor(int x, int y) {
+	COORD pos = { x, y };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+}
+
+void AsciiRender(int dis, int x, int y) {
+	float a = dis;
+	a /= 28;
+	a *= 12;
+	dis = (int)a;
+	char TextCode[12] = { '@', '$', '#', '*', '!', '=', ';', ':', '~', '-', ',', '.' };
+	for (int pre = dis; pre <= y - (dis * 2); pre++) {
+		cursor(x, pre);
+		printf("%c", TextCode[dis]);
+	}
+}
+
+int DistCalc(int pos1x, int pos1y, int pos2x, int pos2y) {
+	int xdiff = 0;
+	int ydiff = 0;
+	float a = 0;
+	float RawData = 0;
+	int TranslatedData = 0;
+	xdiff = pos1x - pos2x;
+	ydiff = pos1y - pos2y;
+	xdiff *= xdiff;
+	ydiff *= ydiff;
+	a = ydiff + xdiff;
+	RawData = sqrt(a);
+	TranslatedData = (int)RawData;
+	return TranslatedData;
+}
+
+int TestRender() {
+	int xsc, ysc;
+	printf("please input doc x scale: ");
+	scanf("%d", &xsc);//test render x
+	printf("please input doc y scale: ");
+	scanf("%d", &ysc);//test render y
+	if (ysc < 37) {
+		printf("sorry, but the minimum render scale of y is 37. if you are trying to increase the fps, please try decreasing the x instead.\nif not, please try with a motitor with larger scale, or height.");
+		return 0;
+	}
+	cursor(0, 0);
+	for (int l = 0; l < 12; l++) {
+		system("cls");
+		for (int m = 0; m < xsc; m++) {
+			AsciiRender(l, m, ysc);
+		}
+		printf("\n%d", l);
+		Sleep(500);
+	}
+	return 0;
+}
+
+int main()
+{
+	//system("cls");
+	//@ $ # * ! = ; : ~ - ,  .  = ascii
+	//0 1 2 3 4 5 6 7 8 9 10 11(far)
+	//map = 20 by 20
+	//22 24 26 28 30 32 34 36 38 40 42 44 = y (by 2)
+	//8 16 24 32 40 48 56 64 72 80 88 96 = x (chunk, by 8)
+	//dis = (close)1 2 3 4 5 6 7 8 9 10 11 12
+	/*
+	11111111111111111111
+	11110000111110000001
+	11110000111110000001
+	11110000111110000001
+	10000000111110000001
+	10000000000000000001
+	10000000000000000001
+	10000000000000000001
+	11111110000000000001
+	11111110000000000001
+	11111110001111111111
+	10000000001111111111
+	10000000001111111111
+	10000000001111111111
+	10000000001111111111
+	11111000000000000001
+	11111000000000000001
+	11111000000000000001
+	11111000000000000001
+	11111111111111111111
+	*/
+	int ofx = 0;
+	int ofy = 0;
+	int PlayerX = 9;
+	int PlayerY = 9;
+	int Menu = 0;
+	int Help = 0;
+	bool map[20][20] =
+	{ { 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1 },
+	{ 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1 },
+	{ 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1 },
+	{ 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1 },
+	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+	{ 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+	{ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+	{ 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+	{ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+	{ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+	{ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+	{ 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
+	};
+	printf("Ascii Render™\n[0] help manager\n[1] test render\n[2] main render\n>>");
+	scanf("%d", &Menu);
+	if (Menu == 0) {
+		printf("---help manager---\n[0] fps is too low for render\n[1] useage manual\n[2] x, y scale check\n[3] copyrights & credits\n>>");
+		scanf("%d", &Help);
+		if (Help == 0) {
+			printf("if fps is too low, try inputing lower x or y scale (might decrease the FOV)\n");
+			return 0;
+		}
+		else if (Help == 1) {
+			printf("1.start the code\n2.input 2\n3.input the docer scale's x\n4.input the docer scale's y\n5.controls: w a s d\n");
+			return 0;
+		}
+		else if (Help == 2) {
+			printf("1.go full screen on the docer\n2.right click the docer\n3.go to 속성 - 레이아웃 - 창 크기 and check the 너비, and 높이\n4.input the value of 너비 on x, 높이 on y\n");
+			return 0;
+		}
+		else if (Help == 3) {
+			printf("maker: 20c\nYou are free to copy, distribute and transmit this work under the following conditions:\nAttribution: You must give credit to the developer.\nNoncommercial: You may not use this work for commercial purposes.\n");
+			return 0;
+		}
+		else
+			printf("input error. please type in a valid number.");
+	}
+	else if (Menu == 1) {
+		system("cls");
+		cursor(0, 0);
+		TestRender();
+		return 0;
+	}
+	else if (Menu == 2) {
+		system("cls");///////////////////////////////////////////////////////////////////////////////////////////// main code
+		cursor(0, 0);
+		printf("please input doc x scale: ");
+		scanf("%d", &ofx);//official global x
+		printf("please input doc y scale: ");
+		scanf("%d", &ofy);//official global y
+		if (ofy < 37) {
+			printf("sorry, but the minimum render scale of y is 37. if you are trying to increase the fps, please try decreasing the x instead.\nif not, please try with a motitor with larger scale, or height.");
+			return 0;
+		}
+		system("cls");
+		cursor(0, 0);
+
+		AsciiRender(DistCalc(PlayerX, PlayerY, 3, 3), 0, ofy);
+		AsciiRender(DistCalc(PlayerX, PlayerY, 4, 0), 1, ofy);
+		AsciiRender(DistCalc(PlayerX, PlayerY, 5, 0), 2, ofy);
+		AsciiRender(DistCalc(PlayerX, PlayerY, 8, 4), 3, ofy);
+		AsciiRender(DistCalc(PlayerX, PlayerY, 10, 4), 4, ofy);
+		AsciiRender(DistCalc(PlayerX, PlayerY, 10, 4), 5, ofy);
+		AsciiRender(DistCalc(PlayerX, PlayerY, 11, 5), 6, ofy);
+		AsciiRender(DistCalc(PlayerX, PlayerY, 12, 4), 7, ofy);
+		AsciiRender(DistCalc(PlayerX, PlayerY, 15, 0), 8, ofy);
+		AsciiRender(DistCalc(PlayerX, PlayerY, 16, 0), 9, ofy);
+		AsciiRender(DistCalc(PlayerX, PlayerY, 17, 0), 10, ofy);
+		AsciiRender(DistCalc(PlayerX, PlayerY, 18, 0), 11, ofy);
+		cursor(10, 50);
+	}
+	else
+		printf("input error. please type in a valid number.");
+	return 0;
+}

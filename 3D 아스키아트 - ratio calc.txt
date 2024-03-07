@@ -1,0 +1,22 @@
+#include <iostream>
+
+
+
+int main() {
+	//pos1 = player, pos2 = obj
+	int targetX = 0;
+	int outputY = 0;
+	int pos1x, pos1y, pos2x, pos2y;
+	int xDiff, yDiff;
+	float a = 0;
+	printf("pos1 x y: ");
+	scanf("%d %d", &pos1x, &pos1y);
+	printf("pos2 x y: ");
+	scanf("%d %d", pos2x, pos2y);
+	printf("");
+	xDiff = pos2x - pos1x;
+	yDiff = pos2x - pos1y;
+	a = yDiff / xDiff;
+	outputY = (int)a * targetX;
+	return 0;
+}
