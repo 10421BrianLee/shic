@@ -1,0 +1,111 @@
+﻿
+void setup()
+{
+	ServoWrite(2, 90)
+	ServoWrite(3, 90)
+	DigitalWrite(5, HIGH)
+	ServoWrite(13, 80)
+	DigitalWrite(7, HIGH)
+	DigitalWrite(8, HIGH)
+	DigitalWrite(9, HIGH)
+}
+//Comment(30le 150ri)
+//Comment(80cl 120op)
+
+void loop()
+{
+	DigitalTempRead(4)
+	H = Humidity
+	if (H>7)
+	{
+		while (H>7)
+		{
+			for (i = 90; i >= 30; i=i-10)
+			{
+				ServoWrite(2, i)
+				Delay(20)
+			}
+		}
+		for (i = 30; i <= 90; i=i+10)
+		{
+			ServoWrite(2, i)
+			Delay(20)
+		}
+	}
+	elseif (H<7)
+	{
+		while (H<7)
+		{
+			for (i = 90; i <= 150; i=i+10)
+			{
+				ServoWrite(2, i)
+				Delay(20)
+			}
+		}
+		for (i = 150; i >= 90; i=i-10)
+		{
+			ServoWrite(2, i)
+			Delay(20)
+		}
+	}
+//	//EmptyLine
+//	//EmptyLine
+	a = AnalogRead(4)
+	if (a<7)
+	{
+		while (a<7)
+		{
+			for (i = 90; i >= 30; i=i-10)
+			{
+				ServoWrite(3, i)
+				Delay(20)
+			}
+		}
+		for (i = 30; i <= 90; i=i+10)
+		{
+			ServoWrite(3, i)
+			Delay(20)
+		}
+	}
+	elseif (a>7)
+	{
+		while (a>7)
+		{
+			for (i = 90; i <= 150; i=i+10)
+			{
+				ServoWrite(3, i)
+				Delay(20)
+			}
+		}
+		for (i = 150; i >= 90; i=i-10)
+		{
+			ServoWrite(3, i)
+			Delay(20)
+		}
+	}
+//	//EmptyLine
+//	//EmptyLine
+	a0 = AnalogRead(0)
+	a1 = AnalogRead(1)
+	a2 = AnalogRead(2)
+	Delay(1000)
+	Print("a0= ")
+	Print(a0)
+	Print(", a1= ")
+	Print(a1)
+	Print(", a2= ")
+	PrintLine(a2)
+	if (a0<90 || a2 <90)
+	{
+		for (i = 80; i <= 130; i=i+10)
+		{
+			ServoWrite(13, i)
+			Delay(20)
+		}
+		for (i = 130; i >= 80; i=i-10)
+		{
+			ServoWrite(13, i)
+			Delay(20)
+		}
+	}
+}
