@@ -1,0 +1,18 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void main()
+{
+	FILE *rafung= fopen("NumberFile.txt", "w");
+	char str[30];
+	if (rafung == NULL)
+	{
+		printf("파일없음");
+		exit(1);
+	}
+	fprintf(rafung, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+	FILE *rafung2 = fopen("NumberFile.txt", "r");
+	fscanf(rafung2, "%s", &str);
+	printf("%s", str);
+	fclose(rafung2);
+}

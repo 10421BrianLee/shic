@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+int main() {
+	int N = 0;
+	int M = 0;
+	int x = 0; 
+	int y = 0;
+	int info = 0;
+	cin >> N >> M;
+	vector<int> a[100];
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			a[i].push_back(0);
+		}
+	}
+	for (int i = 0; i < M; i++) {
+		cin >> x >> y >> info;
+		if (a[x - 1][y - 1] != 0) {
+			if (a[x - 1][y - 1] < info) {
+				a[x - 1][y - 1] = info;
+			}
+		}
+		else if (a[x - 1][y - 1] == 0) {
+			a[x - 1][y - 1] = info;
+		}
+	}
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			cout << a[i][j];
+		}
+		cout << endl;
+	}
+	return 0;
+}

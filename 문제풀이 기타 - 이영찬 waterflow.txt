@@ -1,0 +1,48 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+int main() {
+	int b = 0;
+	int x = 0;
+	int y = 0;
+	int waterX = 0;
+	int waterY = 0;
+	cin >> x >> y;
+	vector<int> a[100];
+	for (int i = 0; i < x; i++) {
+		for (int j = 0; j < y; j++) {
+			cin >> b;
+			a[j].push_back(b);
+		}
+	}
+	for (int i = 0; i < x; i++) {
+		for (int j = 0; j < y; j++) {
+			if (a[i][j] == 2) {
+				waterX = i;
+				waterY = j;
+			}
+		}
+	}
+	while (a[waterX + 1][waterY] == 0 || a[waterX][waterY + 1] == 0) {
+		if (a[waterX + 1][waterY] == 0) {
+			a[waterX + 1][waterY] = 2;
+			waterX++;
+		}
+		if (a[waterX][waterY + 1] == 0) {
+			a[waterX][waterY + 1] = 2;
+			waterY++;
+		}
+	}
+	cout << endl << endl;
+	for (int i = 0; i < x; i++)
+	{
+		for (int j = 0; j < y; j++)
+		{
+			cout << a[j][i] << " ";
+		}
+		cout << endl;
+	}
+	cout << endl << endl;
+	cout << waterY << " " << waterX;
+	return 0;
+}

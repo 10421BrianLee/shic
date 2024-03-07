@@ -1,0 +1,24 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+vector <int> tp;
+
+int F(int p, int t) {
+	if (t <= 0)
+		return p + 1;
+	return F(tp[p] - 1, t - 1);
+}
+
+int main() {
+	int N, P, T;
+	cin >> N >> P >> T;
+	for (int i = 0; i < N; i++) {
+		int dst;
+		cin >> dst;
+		tp.push_back(dst);
+	}
+	cout << F(P - 1, T);
+	return 0;
+}

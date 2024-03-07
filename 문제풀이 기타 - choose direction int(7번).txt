@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <conio.h>
+#include <windows.h>
+
+void cursor(int x, int y)
+{
+	COORD pos = { x, y };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+}
+
+int main()
+{
+	int ar[10] = { 0,1,2,3,4,5,6,7,8,9 };
+	char dir = 'A';
+	int num = 0;
+	system("cls");
+	printf("direction : ");
+	scanf("%c", &dir);
+	cursor(40, 12);
+	if (dir == 'R' || dir == 'r')
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			cursor(40 + i , 12);
+			printf("%d", ar[num]);
+			Sleep(1000);
+			num++;
+		}
+	}
+	else if (dir == 'L' || dir == 'l')
+	{
+		for (int i = 9; i >= 0; i--)
+		{
+			cursor(40 + i, 12);
+			printf("%d", ar[num]);
+			Sleep(1000);
+			num++;
+		}
+	}
+	else if (dir == 'U' || dir == 'u')
+	{
+		for (int i = 9; i >= 0; i--)
+		{
+			cursor(40, 12 + i);
+			printf("%d", ar[num]);
+			Sleep(1000);
+			num++;
+		}
+	}
+	else if (dir == 'D' || dir == 'd')
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			cursor(40, 12 + i);
+			printf("%d", ar[num]);
+			Sleep(1000);
+			num++;
+		}
+	}
+	else
+	{
+		printf("잘못입력하였습니다.");
+	}
+	return 0;
+}
